@@ -8,6 +8,7 @@ package controller;
 import java.util.ArrayList;
 import model.AScores;
 import model.BScores;
+import model.Student;
 
 /**
  *
@@ -15,15 +16,29 @@ import model.BScores;
  */
 public class Algorithm {
     
+    ArrayList<Student> studentList;
     ArrayList<AScores> aScoresList;
     ArrayList<BScores> bScoresList;
+    ArrayList<Integer> idList;
+    int numOfClusters;
+    int size;
     
-    public void performSectioning(){
+    public Algorithm(ArrayList<Student> studentList, int numOfClusters) {
+        this.studentList = studentList;
+        this.numOfClusters = numOfClusters;
+        this.size = studentList.size();
+        
+        System.out.println(studentList.get(0).getFirstname());
+    }
+    
+    public void execute(){
         
     }
     
     public void generateCenters(){
         
     }
+    
+    //other algos here
     
 }

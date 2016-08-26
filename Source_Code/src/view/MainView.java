@@ -1,3 +1,6 @@
+/*TEMPORARY VIEW*/
+/*TEMPORARY VIEW*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,160 +8,254 @@
  */
 package view;
 
+import controller.Algorithm;
 import controller.FileRead;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import javax.swing.JButton;
+import java.io.FileWriter;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import model.Student;
 
-public class MainView extends JFrame implements ActionListener {
+/**
+ *
+ * @author Hanna Sha
+ */
+public class MainView extends javax.swing.JFrame {
 
-    private JButton btnNewButton, btnChooseFolder, btnStartSectioning;
-    private JLabel lblNewSectioning, lblSectioningName, lblNumberOfResulting, lblChooseStudentList, lblFileDirectory, lblSaveFileLocation, lblFolderDirectory;
-    private JPanel contentPane;
-    private JTextField txtFieldName, txtFieldNum;
-    private String filepath;
+    String filepath;
+    ArrayList<Student> studentList;
 
     /**
-     * Create the frame.
+     * Creates new form MainView
      */
     public MainView() {
-        for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                try {
-                    UIManager.setLookAndFeel(info.getClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                break;
-            }
-        }
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 650, 350);
-        setVisible(true);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
-
-        lblNewSectioning = new JLabel("NEW SECTIONING");
-        lblNewSectioning.setFont(new Font("Tahoma", Font.BOLD, 11));
-        lblNewSectioning.setBounds(295, 11, 102, 15);
-        contentPane.add(lblNewSectioning);
-
-        lblSectioningName = new JLabel("Sectioning Name");
-        lblSectioningName.setBounds(80, 55, 151, 15);
-        contentPane.add(lblSectioningName);
-
-        txtFieldName = new JTextField();
-        txtFieldName.setBounds(260, 50, 256, 25);
-        contentPane.add(txtFieldName);
-        txtFieldName.setColumns(10);
-
-        lblNumberOfResulting = new JLabel("Number of Resulting Sections");
-        lblNumberOfResulting.setBounds(80, 96, 170, 14);
-        contentPane.add(lblNumberOfResulting);
-
-        txtFieldNum = new JTextField();
-        txtFieldNum.setBounds(260, 91, 86, 25);
-        contentPane.add(txtFieldNum);
-        txtFieldNum.setColumns(10);
-
-        lblChooseStudentList = new JLabel("Choose Student List File (.csv)");
-        lblChooseStudentList.setBounds(80, 135, 201, 14);
-        contentPane.add(lblChooseStudentList);
-
-        btnNewButton = new JButton("Choose File");
-        btnNewButton.addActionListener((ActionListener) this);
-        btnNewButton.setBounds(80, 148, 116, 23);
-        contentPane.add(btnNewButton);
-
-        lblFileDirectory = new JLabel("");
-        lblFileDirectory.setBounds(260, 152, 364, 14);
-        contentPane.add(lblFileDirectory);
-
-        lblSaveFileLocation = new JLabel("Save File Location (.csv)");
-        lblSaveFileLocation.setBounds(80, 190, 146, 14);
-        contentPane.add(lblSaveFileLocation);
-
-        btnChooseFolder = new JButton("Choose Folder");
-        btnChooseFolder.addActionListener((ActionListener) this);
-        btnChooseFolder.setBounds(80, 203, 116, 23);
-        contentPane.add(btnChooseFolder);
-
-        lblFolderDirectory = new JLabel("");
-        lblFolderDirectory.setBounds(260, 207, 364, 14);
-        contentPane.add(lblFolderDirectory);
-
-        btnStartSectioning = new JButton("START SECTIONING");
-        btnStartSectioning.setBounds(263, 250, 146, 23);
-        contentPane.add(btnStartSectioning);
+        initComponents();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        if (e.getSource() == btnNewButton) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Student List (.csv)", "csv", "CSV");
-            fileChooser.setFileFilter(filter);
-            int result = fileChooser.showOpenDialog(this);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                filepath = selectedFile.getAbsolutePath();
-                lblFileDirectory.setText(filepath);
-                //read file
-                FileRead fr = new FileRead();
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
 
-                if (filepath.endsWith(".csv")) {
-                    fr.readCSVFile(filepath);
-                } else if (filepath.endsWith(".xlsx") || filepath.endsWith(".xls")) {
-                    fr.readExcelFile(filepath);
-                }
+        chooseFileButton = new javax.swing.JButton();
+        titleLabel = new javax.swing.JLabel();
+        sectionNameTextField = new javax.swing.JTextField();
+        sectionNameLabel = new javax.swing.JLabel();
+        sectionCountLabel = new javax.swing.JLabel();
+        sectionCountTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        fileDirectoryLabel = new javax.swing.JLabel();
+        folderDirectoryLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        chooseFolderButton = new javax.swing.JButton();
+        startSectioningButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        chooseFileButton.setText("Choose File");
+        chooseFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseFileButtonActionPerformed(evt);
             }
-        } else if (e.getSource() == btnChooseFolder) {
-            JFrame parentFrame = new JFrame();
+        });
 
-            JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Student List (.csv)", "csv", "CSV");
-            fileChooser.setFileFilter(filter);
-            fileChooser.setDialogTitle("Specify a file to save");
-            int userSelection = fileChooser.showSaveDialog(parentFrame);
+        titleLabel.setText("NEW SECTIONING");
 
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-//	            
-                lblFolderDirectory.setText(fileToSave.getPath());
-//	            try {
-//	                FileWriter fw = new FileWriter(fileToSave.getPath());
-////	                fw.write(text);
-////	                fw.flush();
-////	                fw.close();
-                //
-//	                JOptionPane.showMessageDialog(null, "Results are saved.");
-//	            } catch (Exception e2) {
-//	                JOptionPane.showMessageDialog(null, e2.getMessage());
-//	            }
+        sectionNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sectionNameTextFieldActionPerformed(evt);
             }
+        });
+
+        sectionNameLabel.setText("Sectioning Name");
+
+        sectionCountLabel.setText("Number of Resulting Sections");
+
+        sectionCountTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sectionCountTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Choose Student List file (.csv)");
+
+        fileDirectoryLabel.setText("Directory");
+
+        folderDirectoryLabel.setText("Directory");
+
+        jLabel7.setText("Saved file location (.csv)");
+
+        chooseFolderButton.setText("Choose Folder");
+        chooseFolderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseFolderButtonActionPerformed(evt);
+            }
+        });
+
+        startSectioningButton.setText("START SECTIONING");
+        startSectioningButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startSectioningButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel4)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(sectionCountLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(sectionCountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(chooseFolderButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(folderDirectoryLabel))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(chooseFileButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(fileDirectoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(147, 147, 147))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(titleLabel)
+                            .addGap(211, 211, 211))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(sectionNameLabel)
+                            .addGap(71, 71, 71)
+                            .addComponent(sectionNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap()))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(startSectioningButton)
+                        .addGap(191, 191, 191))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(titleLabel)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sectionNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sectionNameLabel))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sectionCountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sectionCountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chooseFileButton)
+                    .addComponent(fileDirectoryLabel))
+                .addGap(4, 4, 4)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(folderDirectoryLabel)
+                    .addComponent(chooseFolderButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(startSectioningButton)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void chooseFileButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Student List (.csv)", "csv", "CSV");
+        fileChooser.setFileFilter(filter);
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            filepath = selectedFile.getAbsolutePath();
+            fileDirectoryLabel.setText(filepath);
+            //read file
+            FileRead fr = new FileRead();
+
+            if (filepath.endsWith(".csv")) {
+                fr.readCSVFile(filepath);
+                studentList = fr.getStudentList();
+            }/* else if (filepath.endsWith(".xlsx") || filepath.endsWith(".xls")) {
+                fr.readExcelFile(filepath);
+            }*/
         }
+    }                                                
 
+    private void sectionNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        // TODO add your handling code here:
+    }                                                    
+
+    private void sectionCountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        // TODO add your handling code here:
+    }                                                     
+
+    private void chooseFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        // TODO add your handling code here:
+        JFrame parentFrame = new JFrame();
+        
+        JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Student List (.csv)", "csv", "CSV");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Specify a file to save");
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+//            File fileToSave = fileChooser.getSelectedFile();
+//            
+//            folderDirectoryLabel.setText(fileToSave.getPath());
+//            try {
+//                FileWriter fw = new FileWriter(fileToSave.getPath());
+////                fw.write(text);
+////                fw.flush();
+////                fw.close();
+//
+//                JOptionPane.showMessageDialog(null, "Results are saved.");
+//            } catch (Exception e2) {
+//                JOptionPane.showMessageDialog(null, e2.getMessage());
+//            }
+        }
+    }                                                  
+
+    private void startSectioningButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        Algorithm algorithm = new Algorithm(studentList, Integer.parseInt(sectionCountTextField.getText()));
+        algorithm.execute();
+    }                                                     
+
+    public String getFilepath() {
+        return this.filepath;
     }
 
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton chooseFileButton;
+    private javax.swing.JButton chooseFolderButton;
+    private javax.swing.JLabel fileDirectoryLabel;
+    private javax.swing.JLabel folderDirectoryLabel;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel sectionCountLabel;
+    private javax.swing.JTextField sectionCountTextField;
+    private javax.swing.JLabel sectionNameLabel;
+    private javax.swing.JTextField sectionNameTextField;
+    private javax.swing.JButton startSectioningButton;
+    private javax.swing.JLabel titleLabel;
+    // End of variables declaration                   
 }

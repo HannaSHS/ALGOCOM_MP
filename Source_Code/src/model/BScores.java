@@ -12,11 +12,7 @@ package model;
 public class BScores {
     int subjectKnowledge;
 
-    public int getSubjectKnowledge() {
-        return subjectKnowledge;
-    }
-
-    public void setSubjectKnowledge(int subjectKnowledge) {
+    public BScores(int subjectKnowledge) {
         this.subjectKnowledge = subjectKnowledge;
     }
 

@@ -18,7 +18,13 @@ public class Student {
     private AScores aScores;
     private BScores bScores;
     
-    public Student() {
+    public Student(int id, String firstname, String middlename, String lastname, AScores aScores, BScores bScores) {
+        this.id = id;
+        this.firstname = firstname;
+        this.middlename = middlename;
+        this.lastname = lastname;
+        this.aScores = aScores;
+        this.bScores = bScores;
     }
     
     public int getId() {
