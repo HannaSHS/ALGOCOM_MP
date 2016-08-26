@@ -10,7 +10,10 @@ package view;
 
 import controller.FileRead;
 import java.io.File;
+import java.io.FileWriter;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -18,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Hanna Sha
  */
 public class MainView extends javax.swing.JFrame {
-    
+
     String filepath;
 
     /**
@@ -107,12 +110,7 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap(54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(sectionNameLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(sectionNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(111, 111, 111))
-                        .addGroup(layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
                                 .addComponent(jLabel4)
@@ -128,13 +126,18 @@ public class MainView extends javax.swing.JFrame {
                                     .addComponent(chooseFileButton)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(fileDirectoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(23, 23, 23)))
+                            .addGap(147, 147, 147))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(titleLabel)
+                            .addGap(211, 211, 211))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(sectionNameLabel)
+                            .addGap(71, 71, 71)
+                            .addComponent(sectionNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap()))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(startSectioningButton)
-                        .addGap(184, 184, 184))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(titleLabel)
-                        .addGap(211, 211, 211))))
+                        .addGap(191, 191, 191))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,13 +148,13 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sectionNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sectionNameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sectionCountLabel)
+                    .addComponent(sectionCountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sectionCountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chooseFileButton)
                     .addComponent(fileDirectoryLabel))
@@ -161,9 +164,9 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(folderDirectoryLabel)
                     .addComponent(chooseFolderButton))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(startSectioningButton)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -179,12 +182,13 @@ public class MainView extends javax.swing.JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             filepath = selectedFile.getAbsolutePath();
+            fileDirectoryLabel.setText(filepath);
             //read file
             FileRead fr = new FileRead();
 
-            if(filepath.endsWith(".csv")){
+            if (filepath.endsWith(".csv")) {
                 fr.readCSVFile(filepath);
-            }else if(filepath.endsWith(".xlsx") || filepath.endsWith(".xls")){
+            } else if (filepath.endsWith(".xlsx") || filepath.endsWith(".xls")) {
                 fr.readExcelFile(filepath);
             }
         }
@@ -200,16 +204,39 @@ public class MainView extends javax.swing.JFrame {
 
     private void chooseFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFolderButtonActionPerformed
         // TODO add your handling code here:
+        JFrame parentFrame = new JFrame();
+        
+        JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Student List (.csv)", "csv", "CSV");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Specify a file to save");
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+//            File fileToSave = fileChooser.getSelectedFile();
+//            
+//            folderDirectoryLabel.setText(fileToSave.getPath());
+//            try {
+//                FileWriter fw = new FileWriter(fileToSave.getPath());
+////                fw.write(text);
+////                fw.flush();
+////                fw.close();
+//
+//                JOptionPane.showMessageDialog(null, "Results are saved.");
+//            } catch (Exception e2) {
+//                JOptionPane.showMessageDialog(null, e2.getMessage());
+//            }
+        }
     }//GEN-LAST:event_chooseFolderButtonActionPerformed
 
     private void startSectioningButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSectioningButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_startSectioningButtonActionPerformed
 
-    public String getFilepath(){
+    public String getFilepath() {
         return this.filepath;
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseFileButton;
