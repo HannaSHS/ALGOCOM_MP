@@ -7,6 +7,7 @@ package controller;
 
 import javax.swing.JFileChooser;
 import view.MainView;
+import view.MainViewV1;
 
 /**
  *
@@ -21,17 +22,17 @@ public class Main {
         MainView mv = new MainView();
         mv.setVisible(true);
         /*        
-        String filepath = mv.getFilepath();
+         String filepath = mv.getFilepath();
         
-        //read file
-        FileRead fr = new FileRead();
+         //read file
+         FileRead fr = new FileRead();
         
-        if(filepath.endsWith(".csv")){
-            fr.readCSVFile(filepath);
-        }else if(filepath.endsWith(".xlsx") || filepath.endsWith(".xls")){
-            fr.readExcelFile(filepath);
-        }
-        */
+         if(filepath.endsWith(".csv")){
+         fr.readCSVFile(filepath);
+         }else if(filepath.endsWith(".xlsx") || filepath.endsWith(".xls")){
+         fr.readExcelFile(filepath);
+         }
+         */
     }
-    
+
 }
