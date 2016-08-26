@@ -1,5 +1,35 @@
 student_id,student_firstname,student_middlename,student_lastname,communication_skill_average,work_attitutude_average,overall_average
-1,William,T.,Robins,90,80,90
-2,Albert,M.,Lee,85,90,85
-3,John,B.,Smith,95,100,95
-4,Anne,C.,Riley,80,85,80
+1,William,T.,Robins,9,8,90
+2,Albert,M.,Lee,8,9,85
+3,John,B.,Smith,7,10,95
+4,Anne,C.,Riley,6,8,75
+5,Claire,R.,Dela Cruz,9,8,80
+6,Dwayne ,Y.,Stricklandey,7,5,70
+7,Nora,P.,Gill,9,6,89
+8,John ,T.,Schmidt,6,7,79
+9,Shane ,F.,Mitchell,6,8,90
+10,Marco ,G.,Cain,9,7,89
+11,Andres ,S.,Hudson,8,7,77
+12,Julius ,L.,Carr,6,5,87
+13,May ,R.,Saunders,5,6,68
+14,Eileen ,Y.,Olson,6,9,76
+15,Ginger ,G.,Roy,8,8,88
+16,Yvette ,F.,Williams,9,10,95
+17,Annie ,P.,Garrett,7,6,84
+18,Darren ,D,Palmer,8,6,83
+19,Lorraine ,R.,Peterson,7,7,77
+20,Valerie,I.,Shaw,9,6,64
+21,Angie ,W.,Logan,6,5,55
+22,Christine ,S.,White,8,7,85
+23,Ruth ,D.,Morton,7,6,80
+24,Tyrone ,A.,Wallace,9,10,94
+25,William ,P.,Hanson,10,7,86
+26,Raul ,G.,Wade,7,8,78
+27,Lucy ,W.,Newton,6,5,68
+28,Catherine ,U.,Herrera,9,10,97
+29,Jennifer ,D.,Mann,8,7,81
+30,Carol ,C.,Taylor,6,5,63
+31,Mindy ,D.,Kennedy,5,8,86
+32,Denise ,C.,White,4,6,69
+33,Harry,V.,Adams,7,6,86
+34,Sonya ,B.,Reid,6,8,74
