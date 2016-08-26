@@ -32,7 +32,7 @@ public class FileRead {
 
                 System.out.println("Student [id= " + param[0] + " , "
                         + "name= " + param[1] + " " + param[2] + " " 
-                        + param[3] + " , overall average= " + param[6] + "]");
+                        + param[3] + " , comm= " + param[4] + " , groupwork= " + param[5] + ", overall average= " + param[6] + "]");
                 if(!param[0].equals("student_id")){
                     int id = Integer.parseInt(param[0]);
                     String firstname = param[1];
