@@ -6,6 +6,8 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import model.AScores;
 import model.BScores;
@@ -23,10 +25,11 @@ public class Algorithm {
     ArrayList<BScores> bScoresList;
     ArrayList<Integer> idList;
     ArrayList<List<Student>> clusterList;
-    
+
     List<Range> rangeList;
 
-    double[] centers;
+    double[] centers, initialDOH;
+    int[] freqCount;
     int numOfClusters;
     int size;
     int clusterSize;
@@ -43,7 +46,7 @@ public class Algorithm {
 
     public void initRange() {
         this.rangeList = new ArrayList();
-        
+
         rangeList.add(new Range(0, 10));
         rangeList.add(new Range(11, 20));
         rangeList.add(new Range(21, 30));
@@ -55,7 +58,7 @@ public class Algorithm {
         rangeList.add(new Range(81, 90));
         rangeList.add(new Range(91, 100));
     }
-    
+
     public void execute() {
         generateCenters();
 
@@ -217,27 +220,155 @@ public class Algorithm {
             }
         }
     }
-      
+
     public void makeHet() {
-        
+        initialDOH = new double[clusterList.size()];
+        freqCount = new int[clusterList.size()];
+        ArrayList<Double> dohOfClusters = new ArrayList<>();
+        ArrayList<int[]> freqList = new ArrayList();
+        ArrayList<Integer> bScores = new ArrayList<>();
+
+        for (int i = 0; i < clusterList.size(); i++) {
+            initialDOH[i] = calcDOH(clusterList.get(i));
+            freqCount = getRangeCounts(clusterList.get(i));
+            freqList.add(freqCount);
+
+            dohOfClusters.add(initialDOH[i]);
+        }
+
+        for (int i = 0; i < clusterList.size(); i++) {
+            for (int j = i + 1; j < clusterList.size(); j++) {
+                double first = calcDOH(clusterList.get(i));
+                double second = calcDOH(clusterList.get(j));
+
+                if (first == 1.0 && second == 1.0) {
+                    break;
+                }
+            }
+
+            for (int o = 1; o < clusterList.get(i).size(); o++) {
+                bScores.add(clusterList.get(i).get(o).getbScores());
+            }
+
+            List<Range> needi = new ArrayList();  //no scores
+            List<Range> needj = new ArrayList();  //with scores
+            for (int e = 0; e < bScores.size(); e++) {
+                for (int f = 0; f < rangeList.size(); f++) {
+                    if (rangeList.get(f).contains(bScores.get(e))) {
+                        needj.add(rangeList.get(f));
+                    } else {
+                        needi.add(rangeList.get(f));
+                    }
+                }
+            }
+
+            //get intersection
+            List<Range> intersection1 = new ArrayList();
+            HashSet<Range> set1 = new HashSet<Range>();
+            for (int k = 0; k < needi.size(); k++) {
+                set1.add(needi.get(k));
+            }
+
+            HashSet<Range> set2 = new HashSet<Range>();
+            for (int k = 0; k < needj.size(); k++) {
+                if (set1.contains(needj.get(k))) {
+                    set2.add(needj.get(k));
+                }
+
+            }
+
+            for (Range n : set2) {
+                intersection1.add(n);
+            }
+            
+            List<Range> intersection2 = new ArrayList();
+            HashSet<Range> set3 = new HashSet<Range>();
+            for (int k = 0; k < needj.size(); k++) {
+                set1.add(needi.get(k));
+            }
+
+            HashSet<Range> set4 = new HashSet<Range>();
+            for (int k = 0; k < needi.size(); k++) {
+                if (set3.contains(needi.get(k))) {
+                    set4.add(needj.get(k));
+                }
+
+            }
+
+            for (Range n : set4) {
+                intersection2.add(n);
+            }
+//            for(int c = 0; c < freqList.size(); c++) {
+//                for(int d = 0; d < freqList.get(c).length; d++) {
+//                    
+//                }
+//            }
+        }
     }
-    
+
+//    public void makeHet() {
+//        ArrayList<Double> dohOfClusters = new ArrayList<>();
+//        ArrayList<Integer> bScores = new ArrayList<>();
+//        ArrayList<int[]> freqOfRange = new ArrayList<>();
+//
+//        for (int i = 0; i < clusterList.size(); i++) {
+//            double doh = calcDOH(clusterList.get(i));
+//            dohOfClusters.add(doh);
+//            int[] freq = getRangeCounts(clusterList.get(i));
+//            freqOfRange.add(freq);
+//        }
+//
+//        for (int n = 0; n < clusterList.size(); n++) {
+//            for (int m = 0; m < clusterList.size(); m++) {
+//                double intitialDOH1 = dohOfClusters.get(n);
+//                double intitialDOH2 = dohOfClusters.get(m);
+//                if (intitialDOH1 == 1.0 && intitialDOH2 == 1.0 && intitialDOH1 == intitialDOH2) {
+//                    break;
+//                }
+//
+//                for (int o = 1; o < clusterList.get(n).size(); o++) {
+//                    bScores.add(clusterList.get(n).get(o).getbScores());
+//
+//                }
+//
+//            }
+//        }
+//    }
     public double calcDOH(List<Student> list) {
         List<Range> ranges = this.rangeList;
         double doh = 0;
-        
-        for(int i = 0; i < list.size(); i++) {
-            for(int j = 0; j < ranges.size(); j++) {
-                if(ranges.get(j).contains(list.get(i).getbScores())) {
+
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < ranges.size(); j++) {
+                if (ranges.get(j).contains(list.get(i).getbScores())) {
                     ranges.remove(j);
                     break;
                 }
             }
         }
-        
+
         int numRanges = rangeList.size() - ranges.size();
         doh = ((double) numRanges) / list.size();
-        
+
         return doh;
+    }
+
+    public int[] getRangeCounts(List<Student> list) {
+        int[] rangeCounts = new int[rangeList.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            int ctr = 0;
+            for (int j = 0; j < rangeList.size(); j++) {
+                if (rangeList.get(j).contains(list.get(i).getbScores())) {
+                    rangeCounts[j] = ctr++;
+                }
+            }
+        }
+
+        return rangeCounts;
+    }
+
+    public ArrayList<List<Student>> getClusterList() {
+        return this.clusterList;
     }
 }

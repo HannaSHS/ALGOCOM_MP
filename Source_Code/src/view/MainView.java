@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -36,7 +37,7 @@ public class MainView extends JFrame implements ActionListener {
     private JLabel lblNewSectioning, lblSectioningName, lblNumberOfResulting, lblChooseStudentList, lblFileDirectory, lblSaveFileLocation, lblFolderDirectory;
     private JPanel contentPane;
     private JTextField txtFieldName, txtFieldNum;
-    
+
     private String filepath;
     private ArrayList<Student> studentList;
 
@@ -136,7 +137,7 @@ public class MainView extends JFrame implements ActionListener {
                 FileRead fr = new FileRead();
 
                 if (filepath.endsWith(".csv")) {
-                	fr.readCSVFile(filepath);
+                    fr.readCSVFile(filepath);
                     studentList = fr.getStudentList();
                 } else if (filepath.endsWith(".xlsx") || filepath.endsWith(".xls")) {
 //                    fr.readExcelFile(filepath);
@@ -166,9 +167,24 @@ public class MainView extends JFrame implements ActionListener {
 //	                JOptionPane.showMessageDialog(null, e2.getMessage());
 //	            }
             }
-        } else if(e.getSource() == btnStartSectioning) {
-        	Algorithm algorithm = new Algorithm(studentList, Integer.parseInt(txtFieldNum.getText()));
+        } else if (e.getSource() == btnStartSectioning) {
+            Algorithm algorithm = new Algorithm(studentList, Integer.parseInt(txtFieldNum.getText()));
             algorithm.execute();
+            
+            ArrayList<List<Student>> clusters = algorithm.getClusterList();
+            
+            StringBuilder sb = new StringBuilder();
+            
+            for(int i = 0; i < clusters.size(); i++) {
+                sb.append("Cluster # " + (i+1));
+                for(int j = 0; j < clusters.get(i).size(); j++) {
+                    sb.append("\nStudent ID: " + clusters.get(i).get(j).getId() + "\tName: " + clusters.get(i).get(j).getFirstname() + " " + clusters.get(i).get(j).getLastname());
+                }
+                sb.append("\n");
+            }
+            
+            ClusterResult cr = new ClusterResult();
+            cr.setTxtArea(sb.toString());
         }
 
     }
